@@ -23,16 +23,11 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    msg = event.message.text.strip()
+    text = event.message.text.strip()
 
-    # === ここが応答ロジック ===
-    if msg == "北斗500":
-        reply = "打てる"
-    else:
-        reply = "ごめん、分からない！"
-    # ========================
-
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=reply)
-    )
+m = re.search(r"北斗\s*(\d+)", text)
+if m:
+    num = int(m.group(1))
+    reply = "打てる" if num >= 500 else "打てない"
+else:
+    reply = f"あなたは「{text}」と書きましたね！"
