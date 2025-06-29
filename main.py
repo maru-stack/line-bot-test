@@ -24,11 +24,16 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    text = event.message.text.strip()
+    text = event.message.text.strip()          # 1行目
 
-m = re.search(r"北斗\s*(\d+)", text)
-if m:
-    num = int(m.group(1))
-    reply = "打てる" if num >= 500 else "打てない"
-else:
-    reply = f"あなたは「{text}」と書きましたね！"
+    m = re.search(r"北斗\s*(\d+)", text)       # インデント 4 つ入れる
+    if m:                                      # ここも同じく
+        num = int(m.group(1))
+        reply = "打てる" if num >= 500 else "打てない"
+    else:
+        reply = f"あなたは「{text}」と書きましたね！"
+
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=reply)
+    )
