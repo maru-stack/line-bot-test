@@ -3,6 +3,7 @@ from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
+import re
 
 # Render の Environment に登録した値を読み込む
 line_bot_api = LineBotApi(os.getenv("CHANNEL_ACCESS_TOKEN"))
